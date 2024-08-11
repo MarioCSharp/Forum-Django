@@ -25,10 +25,28 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}">Login</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
-    <div class="container">{% block content %} {% endblock %}</div>
+    <div class="container">
+      {% if messages %}
+        {% for message in messages%}
+        <div class="alert alert-warning" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+      {% endif %}
+      {% block content %} {% endblock %}
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
   </body>
